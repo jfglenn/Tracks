@@ -16,15 +16,6 @@ export default {
       const redirectUri = 'http://localhost:8080/bounce';
       const scopes = authInfo.scopes.join(' ');
       
-      // const spotifyAuthUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}`;
-      
-      // window.location.href = spotifyAuthUrl;
-
-
-
-
-
-debugger;
       // Step 1: Generate Code Verifier and Code Challenge
       let codeVerifier = PkceHelper.generateCodeVerifier();
       localStorage.setItem('code_verifier', codeVerifier);

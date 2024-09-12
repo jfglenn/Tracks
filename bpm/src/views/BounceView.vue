@@ -17,11 +17,9 @@ export default {
   },
   methods: {
     async exchangeCodeForToken(code) {
-      debugger;
-      
       const redirectUri = 'http://localhost:8080/bounce'; // e.g. 'http://localhost:8080/callback'
       const codeVerifier = localStorage.getItem('code_verifier');
-      console.log(authInfo.clientId)
+      console.log('client id', authInfo.clientId)
       console.log(codeVerifier)
       // Step 1: Exchange the code for an access token
       const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -30,7 +28,7 @@ export default {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-          client_id: '6aa77145c4a04913aa3e7084dba97018',
+          client_id: authInfo.clientId,
           grant_type: 'authorization_code',
           code: code,
           redirect_uri: redirectUri,
@@ -43,7 +41,7 @@ export default {
       if (data.access_token) {
         // Successfully logged in, save the token
         localStorage.setItem('spotify_access_token', data.access_token);
-        this.$router.push({name: 'dashboard'}); // Redirect to home page or another page
+        this.$router.push({name: 'soundboard'}); // Redirect to home page or another page
       } else {
         console.error('Failed to exchange code for token', data);
       }
