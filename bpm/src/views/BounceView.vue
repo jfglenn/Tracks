@@ -41,7 +41,7 @@ export default {
       if (data.access_token) {
         // Successfully logged in, save the token
         localStorage.setItem('spotify_access_token', data.access_token);
-        this.$router.push({name: 'soundboard'}); // Redirect to home page or another page
+        this.$router.push({name: 'staging'}); // Redirect to home page or another page
       } else {
         console.error('Failed to exchange code for token', data);
       }

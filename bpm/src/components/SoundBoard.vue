@@ -7,38 +7,14 @@
       <input v-model="energy" type="number" min="0" max="1" step="0.1" placeholder="Energy (0-1)">
       <input v-model="danceability" type="number" min="0" max="1" step="0.1" placeholder="Danceability (0-1)">
       <input v-model="valence" type="number" min="0" max="1" step="0.1" placeholder="Mood/Valence (0-1)">
-      <input v-model="genre" type="text" placeholder="Genre">
+      <select v-model="genre">
+        <option disabled value="">Select a genre</option>
+        <option v-for="genre in genreSeeds" :key="genre" :value="genre">{{ genre }}</option>
+      </select>
+      <!-- <input v-model="genre" type="text" placeholder="Genre"> -->
       <input v-model="duration" type="number" placeholder="Playlist duration (minutes)">
       <button type="submit">Generate Playlist</button>
     </form>
-
-    <table v-if="playlist.length">
-      <thead>
-        <tr>
-          <th>Stage</th>
-          <th>Title</th>
-          <th>Artist</th>
-          <th>BPM</th>
-          <th>Genre</th>
-          <th>Energy</th>
-          <th>Mood</th>
-          <th>Dance</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(track, index) in playlist" :key="track.id">
-          <td>{{ index + 1 }}</td>
-          <td>{{ track.name }}</td>
-          <td>{{ track.artists[0].name }}</td>
-          <td>{{ track.tempo }}</td>
-          <td>{{ genre }}</td>
-          <td>{{ track.energy }}</td>
-          <td>{{ track.valence }}</td>
-          <td>{{ track.danceability }}</td>
-          <td>{{ track.duration_ms/60000 }}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 
@@ -52,12 +28,14 @@ export default {
       valence: null,
       genre: '',
       duration: null,
-      playlist: []
+      genreSeeds: [],
+      trackResults: [],
     }
   },
   methods: {
     async generatePlaylist() {
-      this.playlist = await this.fetchRecommendations()
+      this.trackResults = await this.fetchRecommendations()
+      this.$emit('retrieveTracks', this.trackResults);
     },
     async fetchRecommendations() {
       const params = new URLSearchParams({
@@ -124,7 +102,30 @@ export default {
         console.error('Error fetching audio features:', error);
         return tracks; // Return original tracks if fetching features fails
       }
+    },
+    async fetchGenreSeeds() {
+      try {
+        const response = await fetch('https://api.spotify.com/v1/recommendations/available-genre-seeds', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('spotify_access_token')}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch genres');
+        }
+
+        const data = await response.json();
+        this.genreSeeds = data.genres; // Spotify returns genres as an array in "genres" key
+        console.log(this.genreSeeds)
+      } catch (error) {
+        console.error(error);
+      }
     }
+  },
+  mounted(){
+    this.fetchGenreSeeds();
   }
 }
 </script>

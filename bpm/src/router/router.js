@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import BounceView from '@/views/BounceView.vue'
-import SoundBoardView from '@/views/SoundBoardView.vue'
+import Staging from '@/views/Staging.vue'
 
 Vue.use(VueRouter)
 
@@ -19,9 +19,9 @@ const routes = [
     component: BounceView
   },
   {
-    path: '/soundboard',
-    name: 'soundboard',
-    component: SoundBoardView
+    path: '/staging',
+    name: 'staging',
+    component: Staging
   },
   {
     path: '/dashboard',
