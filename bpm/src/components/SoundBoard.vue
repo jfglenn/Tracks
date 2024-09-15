@@ -92,7 +92,7 @@ export default {
 
         const data = await response.json();
         const audioFeatures = data.audio_features;
-
+        console.log(audioFeatures)
         // Combine track info with audio features
         return tracks.map((track, index) => ({
           ...track,
@@ -118,7 +118,6 @@ export default {
 
         const data = await response.json();
         this.genreSeeds = data.genres; // Spotify returns genres as an array in "genres" key
-        console.log(this.genreSeeds)
       } catch (error) {
         console.error(error);
       }
