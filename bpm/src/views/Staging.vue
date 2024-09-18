@@ -62,6 +62,10 @@ export default {
       stagingPlaylist: []
     }
   },
+  created() {
+    // Define onSpotifyWebPlaybackSDKReady globally
+    window.onSpotifyWebPlaybackSDKReady = this.initializePlayer;
+  },
   methods: {
     updateTracks(tracks){
       this.trackResults = tracks;
@@ -92,7 +96,7 @@ export default {
       };
     }
   },
-  mounted() {
+  async mounted() {
     // Load the Spotify Web Playback SDK
     const script = document.createElement('script');
     script.src = 'https://sdk.scdn.co/spotify-player.js';
@@ -109,6 +113,9 @@ export default {
     if (this.player) {
       this.player.disconnect();
     }
+
+    // Clean up the global function
+    window.onSpotifyWebPlaybackSDKReady = null;
   }
 }
 </script>
