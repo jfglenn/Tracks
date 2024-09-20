@@ -38,15 +38,16 @@ export default {
       this.$emit('retrieveTracks', this.trackResults);
     },
     async fetchRecommendations() {
+      let debug = true; 
       const params = new URLSearchParams({
-        min_tempo: (this.bpm - 5),
-        max_tempo: (this.bpm + 5),
-        target_tempo: this.bpm,
-        target_energy: this.energy,
-        target_danceability: this.danceability,
-        target_valence: this.valence,
-        seed_genres: this.genre,
-        limit: Math.ceil(this.duration/3)
+        min_tempo: debug == true ? 95 : (this.bpm - 5),
+        max_tempo: debug == true ? 105 : (this.bpm + 5),
+        target_tempo: debug == true ? 100 : this.bpm,
+        target_energy: debug == true ? 1 : this.energy,
+        target_danceability: debug == true ? 1 : this.danceability,
+        target_valence: debug == true ? 1 : this.valence,
+        seed_genres: debug == true ? "folk" : this.genre,
+        limit: debug == true ? 30 : Math.ceil(this.duration/3)
       });
       const url = `https://api.spotify.com/v1/recommendations?${params.toString()}`; //'https://api.spotify.com/v1/recommendations?limit=5&seed_genres=pop&target_danceability=0.9&target_energy=0.9&target_valence=0'
       console.log(url)

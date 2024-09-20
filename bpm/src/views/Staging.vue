@@ -1,65 +1,98 @@
 // SpotifyPlaylistGenerator.vue
 <template>
-  <div>
-    <SoundBoard @retrieveTracks="updateTracks"></SoundBoard>
-    <table v-if="trackResults.length">
-      <thead>
-        <tr>
-          <th>Stage</th>
-          <th>Title</th>
-          <th>Artist</th>
-          <th>BPM</th>
-          <th>Genre</th>
-          <th>Energy</th>
-          <th>Mood</th>
-          <th>Dance</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(track, index) in trackResults" :key="track.id">
-          <input type="checkbox" v-model="stagingPlaylist" :value="track">
-          <!-- <td>{{ index + 1 }}</td> -->
-          <td>{{ track.name }}</td>
-          <td>{{ track.artists[0].name }}</td>
-          <td>{{ track.tempo }}</td>
-          <td>{{ 'genre' }}</td>
-          <td>{{ track.energy }}</td>
-          <td>{{ track.valence }}</td>
-          <td>{{ track.danceability }}</td>
-          <td>{{ track.duration_ms/60000 }}</td>
-          <td>
-            <iframe
-              :src="`https://open.spotify.com/embed/track/${track.id}`"
-              width="300"
-              height="80"
-              frameborder="0"
-              allowtransparency="true"
-              allow="encrypted-media"
-            ></iframe>
-          </td>
-          <!-- <td>
-            <SpotifyPreviewPlayer v-if="track.id" trackId="track.id"></SpotifyPreviewPlayer>  
-            <p v-else>No preview available for this track.</p>
-          </td> -->
-        </tr>
-      </tbody>
-    </table>
+  <div class="staging-view">
+    <Swiper :items="[1, 2, 3]" autoplay>
+      <!-- First Slide -->
+      <template v-slot="{ index, active }">
+        <div class="custom-slide" :class="{ 'active-slide': active }">
+          <!-- First Slide -->
+          <div v-if="index === 0">
+            <table class="track-results" v-if="trackResults.length">
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>Title</th>
+                  <th>Artist</th>
+                  <th>BPM</th>
+                  <th>Genre</th>
+                  <th>Energy</th>
+                  <th>Mood</th>
+                  <th>Dance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(track, index) in trackResults" :key="track.id">
+                  <td><input type="checkbox" v-model="stagingPlaylist" :value="track"></td>
+                  <td>{{ track.name }}</td>
+                  <td>{{ track.artists[0].name }}</td>
+                  <td>{{ track.tempo }}</td>
+                  <td>{{ 'genre' }}</td>
+                  <td>{{ track.energy }}</td>
+                  <td>{{ track.valence }}</td>
+                  <td>{{ track.danceability }}</td>
+                  <td>{{ track.duration_ms/60000 }}</td>
+                  <td>
+                    <iframe
+                      :src="`https://open.spotify.com/embed/track/${track.id}`"
+                      width="300"
+                      height="80"
+                      frameborder="0"
+                      allowtransparency="true"
+                      allow="encrypted-media"
+                    ></iframe>
+                  </td>
+                </tr>
+              </tbody>
+            </table> 
+          </div>
+
+          <!-- Second Slide -->
+          <div v-else-if="index === 1">
+            <h2>Slide 2 Content</h2>
+            <ul>
+              <li>List item 1</li>
+              <li>List item 2</li>
+              <li>List item 3</li>
+            </ul>
+          </div>
+        </div>
+      </template>
+    </Swiper>
+       
+
+  <SoundBoard @retrieveTracks="updateTracks"></SoundBoard>
+
   </div>
 </template>
 
 <script>
 import SoundBoard from '@/components/SoundBoard.vue';
 import SpotifyPreviewPlayer from '@/components/SpotifyPreviewPlayer.vue';
-
+import Swiper from '@/components/Swiper.vue';
 export default {
   components:{
     SoundBoard,
-    SpotifyPreviewPlayer
+    SpotifyPreviewPlayer,
+    Swiper
   },
   data() {
     return {
       trackResults: [],
-      stagingPlaylist: []
+      stagingPlaylist: [],
+      swiperOptions: {
+        effect: 'creative',
+        creativeEffect: {
+          prev: {
+            shadow: true,
+            translate: [0, 0, -400],
+          },
+          next: {
+            translate: ['100%', 0, 0],
+          },
+        },
+        slidesPerView: 1,
+        loop: true
+      }
     }
   },
   created() {
@@ -94,9 +127,10 @@ export default {
         // Connect to the player!
         this.player.connect();
       };
-    }
+    },
   },
   async mounted() {
+
     // Load the Spotify Web Playback SDK
     const script = document.createElement('script');
     script.src = 'https://sdk.scdn.co/spotify-player.js';
@@ -119,3 +153,16 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+
+body{
+  background-color: #ece2c2;
+  //color: #e6e8e5;
+
+  table{
+    
+
+  }
+}
+
+</style>
