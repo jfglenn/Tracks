@@ -2,11 +2,11 @@
 <template>
   <div class="staging-view">
     <Swiper :items="[1, 2, 3]" autoplay>
-      <!-- First Slide -->
       <template v-slot="{ index, active }">
         <div class="custom-slide" :class="{ 'active-slide': active }">
           <!-- First Slide -->
           <div v-if="index === 0">
+            <div class="scrollable-content">
             <table class="track-results" v-if="trackResults.length">
               <thead>
                 <tr>
@@ -44,16 +44,50 @@
                 </tr>
               </tbody>
             </table> 
+            </div>
           </div>
 
           <!-- Second Slide -->
           <div v-else-if="index === 1">
-            <h2>Slide 2 Content</h2>
-            <ul>
-              <li>List item 1</li>
-              <li>List item 2</li>
-              <li>List item 3</li>
-            </ul>
+            <div class="scrollable-content">
+            <table class="staging-playlist" v-if="stagingPlaylist.length">
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>Title</th>
+                  <th>Artist</th>
+                  <th>BPM</th>
+                  <th>Genre</th>
+                  <th>Energy</th>
+                  <th>Mood</th>
+                  <th>Dance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(track, index) in stagingPlaylist" :key="track.id">
+                  <td><input type="checkbox" v-model="stagingPlaylist" :value="track"></td>
+                  <td>{{ track.name }}</td>
+                  <td>{{ track.artists[0].name }}</td>
+                  <td>{{ track.tempo }}</td>
+                  <td>{{ 'genre' }}</td>
+                  <td>{{ track.energy }}</td>
+                  <td>{{ track.valence }}</td>
+                  <td>{{ track.danceability }}</td>
+                  <td>{{ track.duration_ms/60000 }}</td>
+                  <td>
+                    <iframe
+                      :src="`https://open.spotify.com/embed/track/${track.id}`"
+                      width="300"
+                      height="80"
+                      frameborder="0"
+                      allowtransparency="true"
+                      allow="encrypted-media"
+                    ></iframe>
+                  </td>
+                </tr>
+              </tbody>
+            </table> 
+            </div>
           </div>
         </div>
       </template>
@@ -159,10 +193,56 @@ body{
   background-color: #ece2c2;
   //color: #e6e8e5;
 
-  table{
-    
+  .scrollable-content {
+    height: 400px; /* Set this to whatever height is needed */
+   // height: 100%; // Fills the height of the slide container
+    overflow-y: auto; // Enables vertical scrolling within the slide
+    padding: 20px;
+    box-sizing: border-box;
+    padding: 5%;
 
+    // Optional: Customize scrollbar (Webkit browsers)
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #f0f0f0;
+    }
+}
+
+
+.swiper-pagination {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  .swiper-dot {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+
+    &.is-active-dot {
+      width: 12px;
+      height: 12px;
+      background-color: #333;
+    }
   }
+}
+
+  
 }
 
 </style>

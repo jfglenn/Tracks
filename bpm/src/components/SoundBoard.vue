@@ -38,7 +38,7 @@ export default {
       this.$emit('retrieveTracks', this.trackResults);
     },
     async fetchRecommendations() {
-      let debug = true; 
+      let debug = false; 
       const params = new URLSearchParams({
         min_tempo: debug == true ? 95 : (this.bpm - 5),
         max_tempo: debug == true ? 105 : (this.bpm + 5),
@@ -93,7 +93,7 @@ export default {
 
         const data = await response.json();
         const audioFeatures = data.audio_features;
-        console.log(audioFeatures)
+        console.log('# of songs', audioFeatures.length)
         // Combine track info with audio features
         return tracks.map((track, index) => ({
           ...track,

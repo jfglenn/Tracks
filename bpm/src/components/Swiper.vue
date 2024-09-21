@@ -14,9 +14,9 @@
         :style="wrapperStyle"
       >
         <div v-for="(_, index) in items" :key="index" class="swiper-slide">
-            <div class="scrollable-content">
+            <!-- <div class="scrollable-content"> -->
                 <slot :index="index" :active="index === currentIndex"></slot>
-            </div>
+            <!-- </div> -->
         </div>
       </div>
       <div class="swiper-pagination">
@@ -120,7 +120,6 @@
 
 .swiper-container {
   position: relative;
-  width: 100%;
   overflow: hidden;
   cursor: grab;
   background-color: #ccc;
@@ -140,51 +139,52 @@
   min-width: 100%;
 }
 
-.scrollable-content {
-    height: 100%; // Fills the height of the slide container
-    overflow-y: auto; // Enables vertical scrolling within the slide
-    padding: 20px;
-    box-sizing: border-box;
+// .scrollable-content {
+//     height: 400px; /* Set this to whatever height is needed */
+//    // height: 100%; // Fills the height of the slide container
+//     overflow-y: auto; // Enables vertical scrolling within the slide
+//     padding: 20px;
+//     box-sizing: border-box;
 
-    // Optional: Customize scrollbar (Webkit browsers)
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
+//     // Optional: Customize scrollbar (Webkit browsers)
+//     &::-webkit-scrollbar {
+//       width: 8px;
+//     }
 
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-    }
+//     &::-webkit-scrollbar-thumb {
+//       background-color: rgba(0, 0, 0, 0.3);
+//       border-radius: 10px;
+//     }
 
-    &::-webkit-scrollbar-track {
-      background-color: #f0f0f0;
-    }
-}
+//     &::-webkit-scrollbar-track {
+//       background-color: #f0f0f0;
+//     }
+// }
 
 
-.swiper-pagination {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+// .swiper-pagination {
+//   display: flex;
+//   justify-content: center;
+//   position: absolute;
+//   bottom: 10px;
+//   left: 50%;
+//   transform: translateX(-50%);
 
-  .swiper-dot {
-    width: 8px;
-    height: 8px;
-    margin: 0 4px;
-    background-color: #ccc;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: width 0.3s, height 0.3s, background-color 0.3s;
+//   .swiper-dot {
+//     width: 8px;
+//     height: 8px;
+//     margin: 0 4px;
+//     background-color: #ccc;
+//     border-radius: 50%;
+//     cursor: pointer;
+//     transition: width 0.3s, height 0.3s, background-color 0.3s;
 
-    &.is-active-dot {
-      width: 12px;
-      height: 12px;
-      background-color: #333;
-    }
-  }
-}
+//     &.is-active-dot {
+//       width: 12px;
+//       height: 12px;
+//       background-color: #333;
+//     }
+//   }
+// }
   </style>
   
