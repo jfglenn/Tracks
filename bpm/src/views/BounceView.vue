@@ -13,9 +13,26 @@ export default {
 
     if (code) {
       await this.exchangeCodeForToken(code);
+      await this.getUserProfile();
     }
   },
   methods: {
+    async getUserProfile() {
+      try {
+        const response = await fetch(`https://api.spotify.com/v1/me`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('spotify_access_token')}`,
+          },
+        });
+
+        const data = await response.json();
+        sessionStorage.setItem('spotify_user_info', JSON.stringify(data));
+        console.log("User profile:", data);
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    },
     async exchangeCodeForToken(code) {
       const redirectUri = 'http://localhost:8080/bounce'; // e.g. 'http://localhost:8080/callback'
       const codeVerifier = localStorage.getItem('code_verifier');

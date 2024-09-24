@@ -38,7 +38,7 @@ export default {
       this.$emit('retrieveTracks', this.trackResults);
     },
     async fetchRecommendations() {
-      let debug = false; 
+      let debug = true; 
       const params = new URLSearchParams({
         min_tempo: debug == true ? 95 : (this.bpm - 5),
         max_tempo: debug == true ? 105 : (this.bpm + 5),
@@ -68,7 +68,7 @@ export default {
 
         // Fetch audio features for all tracks
         const tracksWithFeatures = await this.fetchAudioFeatures(tracks);
-
+        
         return tracksWithFeatures;
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);

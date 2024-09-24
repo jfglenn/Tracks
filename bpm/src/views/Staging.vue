@@ -87,6 +87,7 @@
                 </tr>
               </tbody>
             </table> 
+            <button @click="createSuperCoolPlaylist"></button>
             </div>
           </div>
         </div>
@@ -94,7 +95,7 @@
     </Swiper>
        
 
-  <SoundBoard @retrieveTracks="updateTracks"></SoundBoard>
+  <SoundBoard @retrieveTracks="updateTracks" ref="soundboard"></SoundBoard>
 
   </div>
 </template>
@@ -113,20 +114,15 @@ export default {
     return {
       trackResults: [],
       stagingPlaylist: [],
-      swiperOptions: {
-        effect: 'creative',
-        creativeEffect: {
-          prev: {
-            shadow: true,
-            translate: [0, 0, -400],
-          },
-          next: {
-            translate: ['100%', 0, 0],
-          },
-        },
-        slidesPerView: 1,
-        loop: true
-      }
+      playlistId: null,
+      playlistLink: null,
+      playlistNames: ["BPM Bangers"
+        , "Tempo Tantrum"
+        , "Step in Time (Or Else)"
+        , "One BPM to Rule Them All"
+        , "Tempo-Saur: Big Beats, Tiny Arms"
+        , "Pace Makers, Not Heartbreakers"
+      ]
     }
   },
   created() {
@@ -161,6 +157,66 @@ export default {
         // Connect to the player!
         this.player.connect();
       };
+    },
+    async createSuperCoolPlaylist(){
+      if(this.stagingPlaylist.length <= 0)
+        return
+
+      const rndInt = Math.floor(Math.random() * this.playlistNames.length)
+      const playlistData = {
+        name: `${this.playlistNames[rndInt]} | Tracks ${this.$refs.soundboard.bpm}`,
+        description: "Thanks for using Tracks!",
+        public: true, // Change to false if you want the playlist to be private
+      };
+
+      try {
+        let userData = JSON.parse(sessionStorage.getItem('spotify_user_info'));
+        const response = await fetch(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('spotify_access_token')}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(playlistData),
+        });
+
+        const data = await response.json();
+        this.playlistID = data.id;
+        this.playlistLink = data.external_urls.spotify;
+
+        await this.addTracksToPlaylist();
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      } 
+    },
+    async addTracksToPlaylist() {
+      debugger;
+      let trackUris = this.stagingPlaylist.map(track => track.uri); //.replace("spotify:track:", "")
+
+      if(trackUris.length <= 0)
+        return;
+
+      try {
+        const response = await fetch(`https://api.spotify.com/v1/playlists/${this.playlistID}/tracks`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('spotify_access_token')}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uris: trackUris,
+          }),
+        });
+
+        if (response.ok) {
+          console.log("Tracks added to playlist successfully.");
+        } else {
+          const errorData = await response.json();
+          console.error("Error adding tracks:", errorData);
+        }
+      } catch (error) {
+        console.error("Error adding tracks:", error);
+      }
     },
   },
   async mounted() {
@@ -199,7 +255,8 @@ body{
     overflow-y: auto; // Enables vertical scrolling within the slide
     padding: 20px;
     box-sizing: border-box;
-    padding: 5%;
+    padding-top: 5%;
+    padding-bottom: 3%;
 
     // Optional: Customize scrollbar (Webkit browsers)
     &::-webkit-scrollbar {
