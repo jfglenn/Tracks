@@ -98,24 +98,25 @@
   };
   </script>
   
-  <style scoped lang="scss">
-  .custom-slide {
+  <style scoped>
+
+.custom-slide {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 300px;
-//   background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
+}
 
-//   &.active-slide {
-//     background-color: #ddd;
-//   }
+/* .custom-slide.active-slide {
+  background-color: #ddd;
+} */
 
-  img,
-  video {
-    max-width: 100%;
-    height: auto;
-  }
+.custom-slide img,
+.custom-slide video {
+  max-width: 100%;
+  height: auto;
 }
 
 .swiper-container {
@@ -125,10 +126,10 @@
   background-color: #ccc;
   padding: 2%;
   border-radius: 15px;
+}
 
-  &:active {
-    cursor: grabbing;
-  }
+.swiper-container:active {
+  cursor: grabbing;
 }
 
 .swiper-wrapper {
@@ -139,52 +140,29 @@
   min-width: 100%;
 }
 
-// .scrollable-content {
-//     height: 400px; /* Set this to whatever height is needed */
-//    // height: 100%; // Fills the height of the slide container
-//     overflow-y: auto; // Enables vertical scrolling within the slide
-//     padding: 20px;
-//     box-sizing: border-box;
+.swiper-pagination {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-//     // Optional: Customize scrollbar (Webkit browsers)
-//     &::-webkit-scrollbar {
-//       width: 8px;
-//     }
+.swiper-dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
 
-//     &::-webkit-scrollbar-thumb {
-//       background-color: rgba(0, 0, 0, 0.3);
-//       border-radius: 10px;
-//     }
+.swiper-dot.is-active-dot {
+  width: 12px;
+  height: 12px;
+  background-color: #333;
+}
 
-//     &::-webkit-scrollbar-track {
-//       background-color: #f0f0f0;
-//     }
-// }
-
-
-// .swiper-pagination {
-//   display: flex;
-//   justify-content: center;
-//   position: absolute;
-//   bottom: 10px;
-//   left: 50%;
-//   transform: translateX(-50%);
-
-//   .swiper-dot {
-//     width: 8px;
-//     height: 8px;
-//     margin: 0 4px;
-//     background-color: #ccc;
-//     border-radius: 50%;
-//     cursor: pointer;
-//     transition: width 0.3s, height 0.3s, background-color 0.3s;
-
-//     &.is-active-dot {
-//       width: 12px;
-//       height: 12px;
-//       background-color: #333;
-//     }
-//   }
-// }
-  </style>
-  
+</style>

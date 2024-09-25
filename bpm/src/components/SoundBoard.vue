@@ -1,7 +1,6 @@
-// SpotifyPlaylistGenerator.vue
 <template>
   <div>
-    <h1>Spotify Playlist Generator</h1>
+    <!-- <h1>Spotify Playlist Generator</h1>
     <form @submit.prevent="generatePlaylist">
       <input v-model="bpm" type="number" placeholder="Desired BPM">
       <input v-model="energy" type="number" min="0" max="1" step="0.1" placeholder="Energy (0-1)">
@@ -11,15 +10,20 @@
         <option disabled value="">Select a genre</option>
         <option v-for="genre in genreSeeds" :key="genre" :value="genre">{{ genre }}</option>
       </select>
-      <!-- <input v-model="genre" type="text" placeholder="Genre"> -->
+       <input v-model="genre" type="text" placeholder="Genre">
       <input v-model="duration" type="number" placeholder="Playlist duration (minutes)">
       <button type="submit">Generate Playlist</button>
-    </form>
+    </form> -->
+    <Metronome></Metronome>
   </div>
 </template>
 
 <script>
+import Metronome from './Metronome.vue';
 export default {
+  components:{
+    Metronome
+  },
   data() {
     return {
       bpm: null,
