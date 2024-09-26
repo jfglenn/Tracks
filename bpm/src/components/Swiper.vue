@@ -123,7 +123,7 @@
   position: relative;
   overflow: hidden;
   cursor: grab;
-  background-color: #ccc;
+  background-color: #014e4b;
   padding: 2%;
   border-radius: 15px;
 }

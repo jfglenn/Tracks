@@ -254,6 +254,8 @@ export default {
   box-sizing: border-box;
   padding-top: 5%;
   padding-bottom: 3%;
+  color: #aed0cf;
+
 }
 
 /* Optional: Customize scrollbar (Webkit browsers) */

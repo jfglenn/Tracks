@@ -1,8 +1,7 @@
 <template>
   <div>
-    <!-- <h1>Spotify Playlist Generator</h1>
     <form @submit.prevent="generatePlaylist">
-      <input v-model="bpm" type="number" placeholder="Desired BPM">
+      <!-- <input v-model="bpm" type="number" placeholder="Desired BPM">
       <input v-model="energy" type="number" min="0" max="1" step="0.1" placeholder="Energy (0-1)">
       <input v-model="danceability" type="number" min="0" max="1" step="0.1" placeholder="Danceability (0-1)">
       <input v-model="valence" type="number" min="0" max="1" step="0.1" placeholder="Mood/Valence (0-1)">
@@ -11,10 +10,10 @@
         <option v-for="genre in genreSeeds" :key="genre" :value="genre">{{ genre }}</option>
       </select>
        <input v-model="genre" type="text" placeholder="Genre">
-      <input v-model="duration" type="number" placeholder="Playlist duration (minutes)">
+      <input v-model="duration" type="number" placeholder="Playlist duration (minutes)"> -->
       <button type="submit">Generate Playlist</button>
-    </form> -->
-    <Metronome></Metronome>
+    </form>
+    <Metronome ref="metronome"></Metronome>
   </div>
 </template>
 
@@ -44,9 +43,9 @@ export default {
     async fetchRecommendations() {
       let debug = true; 
       const params = new URLSearchParams({
-        min_tempo: debug == true ? 95 : (this.bpm - 5),
-        max_tempo: debug == true ? 105 : (this.bpm + 5),
-        target_tempo: debug == true ? 100 : this.bpm,
+        min_tempo: debug == true ? 95 : (this.$refs.metronome.tempo - 5),
+        max_tempo: debug == true ? 105 : (this.$refs.metronome.tempo + 5),
+        target_tempo: debug == true ? 100 : this.$refs.metronome.tempo,
         target_energy: debug == true ? 1 : this.energy,
         target_danceability: debug == true ? 1 : this.danceability,
         target_valence: debug == true ? 1 : this.valence,

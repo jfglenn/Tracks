@@ -1,11 +1,11 @@
 <template>
     <div class="metronome">
-        <button @click="tapTempo" id="bpm-control-tap">Tap Tempo</button>
+        <button @click="tapTempo" class="bpm-controls" id="bpm-control-tap">Tap Tempo</button>
         <div class="bpm-wrapper">
-            <input type="number" id="bpm" v-model="tempo" @input="onTempoInput" />
-            <div class="bpm-controls">
-                <button class="bpm-control" id="bpm-increase" @click="tempo--">-</button>
-                <button class="bpm-control" id="bpm-decrease" @click="temp++">+</button>
+            <input type="number" class="bpm-controls" id="bpm" v-model="tempo" @input="onTempoInput" />
+            <div class="bpm-level-controls">
+                <button class="bpm-level bpm-controls" id="bpm-decrease" @click="tempo--">-</button>
+                <button class="bpm-level bpm-controls" id="bpm-increase" @click="tempo++">+</button>
             </div>
         </div>
     </div>
@@ -58,28 +58,44 @@
 <style scoped>
   .metronome {
     display: flex;
+    justify-content: space-around;
     width: 200px;
     height: 70px;
+    background-color: #630a14;
+    padding: 1%;
+    border-radius: 15px;
+  }
+  .bpm-controls{
+    background-color: #630a14;
+    border: 1px solid #d7706b;
+    border-radius: 10px;
+    color: #d7706b;
   }
   #bpm-control-tap {
-    width: 50%;
+    width: 48%;
+    background-color: #d7706b;
+    color: #630a14;
   }
   .bpm-wrapper{
-    width: 50%;
+    width: 48%;
     display:flex;
     flex-direction: column;
+    justify-content: space-around;
   }
-  .bpm-controls {
-    height: 50%;
+  .bpm-level-controls {
+    height: 42%;
+    display: flex;
+    justify-content: space-between;
   }
-  .bpm-control{
+  .bpm-level{
     height:100%;
-    width: 50%;
+    width: 48%;
   }
   #bpm {
-    height: 50%;
+    height: 42%;
     text-align: center;
     font-size: 20px;
+
   }
 </style>
   
