@@ -1,23 +1,55 @@
 <template>
-    <div class="metronome">
-        <button @click="tapTempo" class="bpm-controls" id="bpm-control-tap">Tap Tempo</button>
-        <div class="bpm-wrapper">
-            <input type="number" class="bpm-controls" id="bpm" v-model="tempo" @input="onTempoInput" />
-            <div class="bpm-level-controls">
-                <button class="bpm-level bpm-controls" id="bpm-decrease" @click="tempo--">-</button>
-                <button class="bpm-level bpm-controls" id="bpm-increase" @click="tempo++">+</button>
+    <div class="metronome outline" :class="{ 'advSettingsExpanded': expandAdvancedSettings }">
+      <div class="main-settings" :class="{ 'advSettingsExpanded': expandAdvancedSettings }">
+        <button @click="tapTempo" class="solid" id="bpm-control-tap">Tap Tempo</button>
+        <div class="main-control-wrapper">
+            <input type="number" class="outline" id="bpm" v-model="tempo" @input="onTempoInput" />
+            <div class="main-leveler-controls">
+                <button class="main-leveler outline" @click="tempo--">-</button>
+                <button class="main-leveler outline" @click="tempo++">+</button>
             </div>
         </div>
+      </div>
+      <div class="advanced-settings outline" :class="{ 'advSettingsExpanded': expandAdvancedSettings }">
+          <p @click="configureAdvancedSettings" id="advanced-settings-label">Advanced Settings</p>
+          <div class="advanced-control-wrapper" v-if="expandAdvancedSettings">
+           
+            <div class="tool">
+              <p class="advanced-bpm-label">Minimum BPM</p>
+              <div class="advanced-controls outline">
+                <button class="advanced-leveler-left solid" @click="minTempo--">-</button>
+                <input class="advanced-bpm outline-without-border" type="number"  v-model="minTempo" @input="onTempoInput"></input>
+                <button class="advanced-leveler-right solid" @click="minTempo++">+</button>
+              </div>
+            </div>
+            
+            <div class="tool">
+              <p class="advanced-bpm-label">Maximum BPM</p>
+              <div class="advanced-controls outline">
+                <button class="advanced-leveler-left solid" @click="maxTempo--">-</button>
+                <input class="advanced-bpm outline-without-border" type="number" v-model="maxTempo" @input="onTempoInput"></input>
+                <button class="advanced-leveler-right solid" @click="maxTempo++">+</button>
+              </div>
+            </div>
+          </div> 
+      </div>
     </div>
 </template>
   
 <script>
+
     export default {
     data() {
         return {
         tempo: 120,
+        minTempo: null,
+        maxTempo: null,
         taps: [],
+        expandAdvancedSettings: false
         };
+    },
+    computed:{
+      
     },
     methods: {
         tapTempo() {
@@ -51,6 +83,18 @@
             this.tempo = inputTempo;
         }
         },
+        configureAdvancedSettings(){
+          this.expandAdvancedSettings = !this.expandAdvancedSettings
+
+          if(this.expandAdvancedSettings){
+            if(this.minTempo == null)
+              this.minTempo = this.tempo - 5;
+
+            if(this.maxTempo == null)
+              this.maxTempo = this.tempo + 5;
+
+          }
+        }
     },
 };
 </script>
@@ -58,44 +102,141 @@
 <style scoped>
   .metronome {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     width: 200px;
-    height: 70px;
-    background-color: #630a14;
+    height: 125px;
     padding: 1%;
     border-radius: 15px;
+    transition: height 0.3s;
   }
-  .bpm-controls{
-    background-color: #630a14;
-    border: 1px solid #d7706b;
-    border-radius: 10px;
-    color: #d7706b;
+  .metronome.advSettingsExpanded{
+    height: 300px;
+    transition: height 0.3s;
   }
-  #bpm-control-tap {
-    width: 48%;
+
+  .solid{
     background-color: #d7706b;
     color: #630a14;
+    border:none;
   }
-  .bpm-wrapper{
+
+  .outline{
+    background-color: #630a14;
+    color: #d7706b;
+    border-color: #d7706b;
+    border: 1px solid #d7706b;
+  }
+
+  .outline-without-border{
+    background-color: #630a14;
+    color: #d7706b;
+    border:none;
+  }
+  .main-settings{
+    height: 70%;
+    display: flex;
+    justify-content: space-around;
+    border-radius:15px;
+    margin-bottom: 5px;
+  }
+  .main-settings.advSettingsExpanded{
+    height:30%;
+    transition: height 0.3s;
+  }
+
+  #bpm-control-tap {
+    width: 48%;
+    border-radius: 10px;
+  }
+  .main-control-wrapper{
     width: 48%;
     display:flex;
     flex-direction: column;
     justify-content: space-around;
   }
-  .bpm-level-controls {
+  .main-leveler-controls {
     height: 42%;
     display: flex;
     justify-content: space-between;
   }
-  .bpm-level{
+  .main-leveler{
     height:100%;
     width: 48%;
+    border-radius: 10px;
   }
   #bpm {
     height: 42%;
     text-align: center;
     font-size: 20px;
-
+    border-radius: 12px;
   }
+
+
+  .advanced-settings{
+    padding: 3%;
+    height: 25%;
+    border-radius: 15px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #advanced-settings-label{
+    margin: 0px;
+    font-weight: bold;
+  }
+  .advanced-settings.advSettingsExpanded {
+    display:flex;
+    flex-direction: column;
+    height: 65%;
+    padding: 5%;
+    transition: height 0.3s;
+    overflow-y: hidden;
+  } 
+  
+ .advanced-control-wrapper{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 3%;
+  }
+
+  .advanced-bpm-label{
+    margin: 0px;
+    margin-left:3%;
+  }
+
+  .tool{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin: 3%;
+    height:45%;
+  }
+
+  .advanced-controls{
+    display:flex;
+    border-radius: 20px;
+    height: 46%;
+    margin: 3%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .advanced-leveler-left, .advanced-leveler-right{
+    height: 100%;
+    width: 20%
+  }
+
+  .advanced-leveler-left{
+    border-radius: 15px 0px 0px 15px;
+  }
+  .advanced-leveler-right{
+    border-radius: 0px 15px 15px 0px;
+  }
+  .advanced-bpm{
+    width:25%;
+  }  
 </style>
   

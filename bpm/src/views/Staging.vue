@@ -244,7 +244,9 @@ export default {
 }
 </script>
 <style scoped>
-
+.staging{
+  overflow-y: scroll;
+}
 .scrollable-content {
   height: 400px; /* Set this to whatever height is needed */
   /* height: 100%; Fills the height of the slide container */

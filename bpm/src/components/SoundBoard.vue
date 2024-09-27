@@ -11,7 +11,7 @@
       </select>
        <input v-model="genre" type="text" placeholder="Genre">
       <input v-model="duration" type="number" placeholder="Playlist duration (minutes)"> -->
-      <button type="submit">Generate Playlist</button>
+      <button id="generate" type="submit">Generate Playlist</button>
     </form>
     <Metronome ref="metronome"></Metronome>
   </div>
@@ -43,8 +43,8 @@ export default {
     async fetchRecommendations() {
       let debug = true; 
       const params = new URLSearchParams({
-        min_tempo: debug == true ? 95 : (this.$refs.metronome.tempo - 5),
-        max_tempo: debug == true ? 105 : (this.$refs.metronome.tempo + 5),
+        min_tempo: debug == true ? 95 : (this.$refs.metronome.minTempo),
+        max_tempo: debug == true ? 105 : (this.$refs.metronome.maxTempo),
         target_tempo: debug == true ? 100 : this.$refs.metronome.tempo,
         target_energy: debug == true ? 1 : this.energy,
         target_danceability: debug == true ? 1 : this.danceability,
@@ -132,3 +132,11 @@ export default {
   }
 }
 </script>
+
+<style>
+
+#generate{
+  
+}
+
+</style>

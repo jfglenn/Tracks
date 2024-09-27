@@ -11,6 +11,7 @@
 <style lang="scss">
 body{
   background-color: #f2e9e3; //#ece2c2;
+  padding: 2%;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
