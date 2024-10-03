@@ -100,6 +100,11 @@
 </script>
   
 <style scoped>
+
+/*
+main color: #630a14;
+accent color: #d7706b;
+*/ 
   .metronome {
     display: flex;
     flex-direction: column;
@@ -169,6 +174,7 @@
     text-align: center;
     font-size: 20px;
     border-radius: 12px;
+    padding-left: 15%;
   }
 
 
@@ -182,12 +188,14 @@
     align-items: center;
   }
   #advanced-settings-label{
-    margin: 0px;
+    margin: 2%;
     font-weight: bold;
   }
   .advanced-settings.advSettingsExpanded {
     display:flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 65%;
     padding: 5%;
     transition: height 0.3s;
@@ -237,6 +245,7 @@
   }
   .advanced-bpm{
     width:25%;
+    margin-left: 10%;
   }  
 </style>
   

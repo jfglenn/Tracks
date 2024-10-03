@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="soundboard">
     <form @submit.prevent="generatePlaylist">
       <!-- <input v-model="bpm" type="number" placeholder="Desired BPM">
       <input v-model="energy" type="number" min="0" max="1" step="0.1" placeholder="Energy (0-1)">
@@ -14,14 +14,17 @@
       <button id="generate" type="submit">Generate Playlist</button>
     </form>
     <Metronome ref="metronome"></Metronome>
+    <Timer ref="timer"></Timer>
   </div>
 </template>
 
 <script>
 import Metronome from './Metronome.vue';
+import Timer from './Timer.vue';
 export default {
   components:{
-    Metronome
+    Metronome,
+    Timer
   },
   data() {
     return {
@@ -50,7 +53,7 @@ export default {
         target_danceability: debug == true ? 1 : this.danceability,
         target_valence: debug == true ? 1 : this.valence,
         seed_genres: debug == true ? "folk" : this.genre,
-        limit: debug == true ? 30 : Math.ceil(this.duration/3)
+        limit: debug == true ? 30 : this.$refs.timer.calculatePlaylistSongCount()
       });
       const url = `https://api.spotify.com/v1/recommendations?${params.toString()}`; //'https://api.spotify.com/v1/recommendations?limit=5&seed_genres=pop&target_danceability=0.9&target_energy=0.9&target_valence=0'
       console.log(url)
@@ -134,9 +137,9 @@ export default {
 </script>
 
 <style>
-
-#generate{
-  
+.soundboard{
+  display:flex;
+  gap: 10px;
 }
 
 </style>

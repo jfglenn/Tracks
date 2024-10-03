@@ -95,7 +95,7 @@
     </Swiper>
        
 
-  <SoundBoard @retrieveTracks="updateTracks" ref="soundboard"></SoundBoard>
+  <SoundBoard class="soundboard" @retrieveTracks="updateTracks" ref="soundboard"></SoundBoard>
 
   </div>
 </template>
@@ -244,8 +244,8 @@ export default {
 }
 </script>
 <style scoped>
-.staging{
-  overflow-y: scroll;
+.soundboard{
+  margin: 2%;
 }
 .scrollable-content {
   height: 400px; /* Set this to whatever height is needed */
