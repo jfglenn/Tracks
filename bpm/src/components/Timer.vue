@@ -137,13 +137,13 @@ accent color: #dc561f
   .solid {
     background-color: #d3d9f1;
     color: #dc561f;
-    border: 1px solid #dc561f;
+    border: 1.5px solid #dc561f;
   }
   
   .outline {
     background-color: #d3d9f1;
     color: #dc561f;
-    border: 1px solid #dc561f;
+    border: 1.5px solid #dc561f;
   }
   
   .outline-without-border {

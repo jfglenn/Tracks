@@ -15,16 +15,19 @@
     </form>
     <Metronome ref="metronome"></Metronome>
     <Timer ref="timer"></Timer>
+    <Energy ref="energy"></Energy>
   </div>
 </template>
 
 <script>
 import Metronome from './Metronome.vue';
 import Timer from './Timer.vue';
+import Energy from './Energy.vue';
 export default {
   components:{
     Metronome,
-    Timer
+    Timer,
+    Energy,
   },
   data() {
     return {
@@ -36,7 +39,10 @@ export default {
       duration: null,
       genreSeeds: [],
       trackResults: [],
+      sliderValue: 60
     }
+  },
+  computed:{
   },
   methods: {
     async generatePlaylist() {
@@ -49,7 +55,7 @@ export default {
         min_tempo: debug == true ? 95 : (this.$refs.metronome.minTempo),
         max_tempo: debug == true ? 105 : (this.$refs.metronome.maxTempo),
         target_tempo: debug == true ? 100 : this.$refs.metronome.tempo,
-        target_energy: debug == true ? 1 : this.energy,
+        target_energy: debug == true ? 1 : this.$refs.energy.energy,
         target_danceability: debug == true ? 1 : this.danceability,
         target_valence: debug == true ? 1 : this.valence,
         seed_genres: debug == true ? "folk" : this.genre,

@@ -103,7 +103,7 @@
 
 /*
 main color: #630a14;
-accent color: #d7706b;
+accent color: #eb93bd;
 */ 
   .metronome {
     display: flex;
@@ -120,21 +120,21 @@ accent color: #d7706b;
   }
 
   .solid{
-    background-color: #d7706b;
+    background-color: #eb93bd;
     color: #630a14;
     border:none;
   }
 
   .outline{
     background-color: #630a14;
-    color: #d7706b;
-    border-color: #d7706b;
-    border: 1px solid #d7706b;
+    color: #eb93bd;
+    border-color: #eb93bd;
+    border: 1.5px solid #eb93bd;
   }
 
   .outline-without-border{
     background-color: #630a14;
-    color: #d7706b;
+    color: #eb93bd;
     border:none;
   }
   .main-settings{
