@@ -16,6 +16,7 @@
     <Metronome ref="metronome"></Metronome>
     <Timer ref="timer"></Timer>
     <Energy ref="energy"></Energy>
+    <MultiSelect :originalOptions="genreSeeds"></MultiSelect>
   </div>
 </template>
 
@@ -23,11 +24,13 @@
 import Metronome from './Metronome.vue';
 import Timer from './Timer.vue';
 import Energy from './Energy.vue';
+import MultiSelect from './MultiSelect.vue';
 export default {
   components:{
     Metronome,
     Timer,
     Energy,
+    MultiSelect
   },
   data() {
     return {
@@ -131,6 +134,7 @@ export default {
 
         const data = await response.json();
         this.genreSeeds = data.genres; // Spotify returns genres as an array in "genres" key
+        console.log(this.genreSeeds);
       } catch (error) {
         console.error(error);
       }
@@ -147,5 +151,6 @@ export default {
   display:flex;
   gap: 10px;
 }
+
 
 </style>
