@@ -15,8 +15,13 @@
     </form>
     <Metronome ref="metronome"></Metronome>
     <Timer ref="timer"></Timer>
-    <Energy ref="energy"></Energy>
+    <!-- <Energy ref="energy"></Energy> -->
     <MultiSelect :originalOptions="genreSeeds"></MultiSelect>
+    <!-- <Danceability></Danceability> -->
+    <GroupedSliders></GroupedSliders>
+     <!-- <Slider  :sliderLabel="energy.name" 
+                    :sliderDescription="energy.description" 
+                   ></Slider> -->
   </div>
 </template>
 
@@ -25,19 +30,27 @@ import Metronome from './Metronome.vue';
 import Timer from './Timer.vue';
 import Energy from './Energy.vue';
 import MultiSelect from './MultiSelect.vue';
+import Danceability from './Danceability.vue';
+import Slider from './Slider.vue';
+import GroupedSliders from './GroupedSliders.vue';
 export default {
   components:{
     Metronome,
     Timer,
     Energy,
-    MultiSelect
+    MultiSelect,
+    Danceability,
+    Slider,
+    GroupedSliders
   },
   data() {
     return {
-      bpm: null,
-      energy: null,
-      danceability: null,
-      valence: null,
+
+      energy: {
+                name: "Energy",
+                description: "measures how 'pumped up' a track is",
+                value: 50
+            },
       genre: '',
       duration: null,
       genreSeeds: [],
