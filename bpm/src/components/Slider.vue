@@ -1,109 +1,114 @@
 <template>
-    <div class="slider">
-        <div class="slider-value"><h2>{{ sliderValue }}</h2></div>
-        <div
-            class="slider-box"
-            @mousedown="startDrag"
-            @touchstart="startDrag"
-            @mousemove="drag"
-            @touchmove="drag"
-            @mouseup="stopDrag"
-            @mouseleave="stopDrag"
-            @touchend="stopDrag"
-        >       
-            <div class="slider-fill" :style="{ height: fillPercentage + '%' }"></div>
-        </div>
-        <div class="slider-text">
-                <h2>{{sliderLabel}}</h2>
-                <p v-if="sliderDescription">{{ sliderDescription }}</p>
-        </div>
+  <div class="slider">
+    <div class="slider-percentage">{{ progress }}%</div>
+    <div
+      class="slider-bar"
+      @mousedown="startDrag"
+      @touchstart="startDrag"
+      @touchmove.prevent="onDrag"
+    >
+      <div class="slider-fill" :style="{ height: progress + '%' }"></div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props:{
-        sliderLabel: {
-            type: String,
-            Required: true
-        },
-        sliderDescription:{
-            type: String,
-            Required: false
-        },
-    },
-    data() {
-      return {
-        sliderValue: 50,
-        dragging: false,
-      };
-    },
-    computed: {
-      fillPercentage() {
-        return this.sliderValue
-      },
-    },
-    methods: {
-      startDrag(event) {
-        this.dragging = true;
-        this.updateValue(event);
-      },
-      drag(event) {
-        if (this.dragging) {
-          this.updateValue(event);
-        }
-      },
-      stopDrag() {
-        this.dragging = false;
-      },
-      updateValue(event) {
-        // Get the correct clientY position for touch and mouse events
-        const clientY = event.clientY || (event.touches && event.touches[0].clientY);
-        if (!clientY) return;
-  
-        const rect = this.$el.getBoundingClientRect();
-        const relativeY = Math.max(0, Math.min(rect.bottom - clientY, rect.height));
-        this.sliderValue = Math.round((relativeY / rect.height) * 100);
-      },
-    },
-  };
-  </script>
-  
-  <style scoped>
-    .slider{
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width:100px;
-        height:500px;
-    }
-   .slider-box{
-    border-radius: 15px;
-    height:100%;
-    width:100%;
-    border: 2px solid #333;
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-    touch-action: none; 
-    overflow: hidden;
-  }
-
-
-  .slider-fill {
+    <div class="slider-text">
+      <h5>{{ sliderName }}</h5>
+      <div class="slider-description">{{ sliderDescription }}</div>
+    </div>
    
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #4caf50;
-    transition: height 0.1s;
-  }
-  .value-display {
+  </div>
+</template>
 
-    transform: translateX(-50%);
-    font-weight: bold;
-    color: #333;
-  }
-  </style>
+<script>
+export default {
+  props:{
+    sliderName:{
+        type: String,
+        Required: true
+    },
+    sliderDescription:{
+        type: String,
+        Required: true
+    }
+  },
+  data() {
+    return {
+      progress: 0, // Initial progress value
+      description: 'This represents the current progress.', // Description of the progress bar
+      isDragging: false, // Track if the user is currently dragging
+    };
+  },
+  methods: {
+    startDrag(event) {
+      this.isDragging = true;
+      this.onDrag(event); // Initial drag to set value on click
+      document.addEventListener("mousemove", this.onDrag);
+      document.addEventListener("mouseup", this.stopDrag);
+      document.addEventListener("touchmove", this.onDrag);
+      document.addEventListener("touchend", this.stopDrag);
+    },
+    stopDrag() {
+      this.isDragging = false;
+      document.removeEventListener("mousemove", this.onDrag);
+      document.removeEventListener("mouseup", this.stopDrag);
+      document.removeEventListener("touchmove", this.onDrag);
+      document.removeEventListener("touchend", this.stopDrag);
+    },
+    onDrag(event) {
+      if (!this.isDragging) return;
+      const progressBar = this.$el.querySelector(".slider-bar");
+      const rect = progressBar.getBoundingClientRect();
+      const y = event.touches ? event.touches[0].clientY : event.clientY;
+      const percentage = Math.max(
+        0,
+        Math.min(100, ((rect.bottom - y) / rect.height) * 100)
+      );
+      this.progress = Math.round(percentage);
+    },
+  },
+};
+</script>
+
+<style scoped>
+.slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  user-select: none;
+  margin:10px;
+}
+.slider-percentage {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+.slider-bar {
+  position: relative;
+  width: 75px;
+  height: 150px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.slider-fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #007bff;
+  transition: height 0.1s;
+}
+
+.slider-text{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+h5{
+  margin:10px;
+}
+.slider-description {
+  text-align: center;
+  font-size: 0.7em;
+  text-align: left;
+  color: #666;
+}
+</style>

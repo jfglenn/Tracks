@@ -3,7 +3,7 @@
         <div class="wrapper">
                 <Slider v-for="control in controls" 
                     :ref="control.name"
-                    :sliderLabel="control.name" 
+                    :sliderName="control.name" 
                     :sliderDescription="control.description" 
                    ></Slider>
         </div>
