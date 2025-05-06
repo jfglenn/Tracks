@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       progress: 0, // Initial progress value
-      description: 'This represents the current progress.', // Description of the progress bar
       isDragging: false, // Track if the user is currently dragging
     };
   },
@@ -62,12 +61,15 @@ export default {
         Math.min(100, ((rect.bottom - y) / rect.height) * 100)
       );
       this.progress = Math.round(percentage);
+      this.$emit('setMusicMetric', {metric:this.sliderName, val:this.progress});
     },
   },
 };
 </script>
 
 <style scoped>
+/* dark green: #035941*/ 
+/* lime green: #BEF067 */
 .slider {
   display: flex;
   flex-direction: column;
@@ -75,6 +77,7 @@ export default {
   width: 80px;
   user-select: none;
   margin:10px;
+  color: #BEF067;
 }
 .slider-percentage {
   font-size: 1.2em;
@@ -93,7 +96,7 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #007bff;
+  background-color: #BEF067;
   transition: height 0.1s;
 }
 
@@ -109,6 +112,6 @@ h5{
   text-align: center;
   font-size: 0.7em;
   text-align: left;
-  color: #666;
+  color: #BEF067;
 }
 </style>

@@ -8,8 +8,26 @@
   </div>
 </template>
 
-<style lang="scss">
-body{
+<style>
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  background-color: #f2e9e3;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+/* body{
   background-color: #f2e9e3; //#ece2c2;
   padding: 2%;
 }
@@ -33,5 +51,5 @@ nav {
       color: #42b983;
     }
   }
-}
+} */
 </style>

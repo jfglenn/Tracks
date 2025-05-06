@@ -1,13 +1,18 @@
 <template>
-    <div class="multi-select">
+    <div class="multi-select primary group">
+        <h2>Genres</h2>
         <div class="search">
-            <div class="selections">
-                <div v-for="option in selectedOptions">{{ option }}<button v-on:click="removeSelection(option)">x</button></div>     
+            <div class="selections-wrapper">
+                <div class="selections primary groupItem" v-for="option in selectedOptions">
+                    <div class="selection">{{ option }}</div>   
+                    <button class="btn secondary" v-on:click="removeSelection(option)">X</button>  
+                </div>
             </div>
-            <input type="text" v-model="searchQuery" placeholder="Add up to 5 Genres"></input>
+           
+            <input type="text" class="primary" id="search-bar" v-model="searchQuery" placeholder="Add up to 5 Genres"></input>
         </div>
-        <div class="search-results">
-            <select :size="5" v-on:change="addSelection($event)">
+        <div class="search-results group">
+            <select class="secondary" :size="7" v-on:change="addSelection($event)">
                 <option v-for="option in filterAndSortOptions" :key="option" :value="option">{{ option }}</option>
             </select>
         </div>
@@ -105,14 +110,95 @@ export default{
 </script>
 
 <style scoped>
+/* orange: #DA8338 */
+.primary{
+    border: 1.5px solid #DA8338;
+    border-radius: 15px;
+    background-color: transparent;
+    outline:none;
+}
+.secondary{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    background:none;
+}
+.group{
+    margin:0px 15px 15px 15px;
+}
+.groupItem{
+    margin: 0px 5px 10px 5px;
+    padding: 10px;
+}
+
+
 .multi-select{
     display:flex;
     flex-direction: column;
-    border-radius: 15px;
+    justify-content: space-evenly;
+    width: 350px;
+    height: fit-content;
+    color:#DA8338
+}
+
+
+.selections-wrapper{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.selections{
+    border-radius: 50px;
+    background-color: transparent;
+    width: fit-content;
+    min-width: 75px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn{
+    cursor:pointer;
 }
 
 select{
     width: 100%;
+    color:#DA8338;
+    text-align: left;
+    font-size: large;
+    appearance: none;
+}
+
+select option{
+    margin: 15px;
+    appearance: none;
+    cursor:pointer;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(74, 73, 73);
+  border-radius: 15px; /* Straight line */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#search-bar{
+    width:90%;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+
+#removeSelection{
+    background: transparent;
+    border: none;
 }
 
 </style>

@@ -190,7 +190,7 @@ export default {
       } 
     },
     async addTracksToPlaylist() {
-      debugger;
+
       let trackUris = this.stagingPlaylist.map(track => track.uri); //.replace("spotify:track:", "")
 
       if(trackUris.length <= 0)

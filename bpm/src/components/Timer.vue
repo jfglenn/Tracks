@@ -1,5 +1,5 @@
 <template>
-    <div class="timer outline">
+    <div class="timer outline-without-border">
         <h2>Duration</h2>
       <div class="picker-container">
         <div v-for="type in ['hours', 'minutes']" :key="type" class="picker outline"
@@ -130,24 +130,24 @@
   
   <style scoped>
 /*
-main color: #d3d9f1
-accent color: #dc561f
+main color: #FED12F // yellow
+accent color: #55170A // brown
 */ 
 
   .solid {
-    background-color: #d3d9f1;
-    color: #dc561f;
-    border: 1.5px solid #dc561f;
+    background-color: #FED12F;
+    color: #55170A;
+    border: 1.5px solid #55170A;
   }
   
   .outline {
-    background-color: #d3d9f1;
-    color: #dc561f;
-    border: 1.5px solid #dc561f;
+    background-color: #FED12F;
+    color: #55170A;
+    border: 1.5px solid #55170A;
   }
   
   .outline-without-border {
-    background-color: #d3d9f1;
+    background-color: #FED12F;
     color: #55170a;
     border: none;
   } 
@@ -203,8 +203,8 @@ accent color: #dc561f
     user-select: none;
     position: relative;
     /*box-shadow: inset 0 0 10px #7b89c4;*/
-    box-shadow: inset 0 10px 20px #c1caea, /* Top shadow */
-    inset 0 -10px 20px #c1caea; /* Bottom shadow */
+    /* box-shadow: inset 0 10px 20px #c1caea Top shadow */
+    /* inset 0 -10px 20px #c1caea; Bottom shadow */
   }
 
   

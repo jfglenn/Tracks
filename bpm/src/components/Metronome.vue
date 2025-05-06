@@ -1,5 +1,5 @@
 <template>
-    <div class="metronome outline" :class="{ 'advSettingsExpanded': expandAdvancedSettings }">
+    <div class="metronome outline-without-border" :class="{ 'advSettingsExpanded': expandAdvancedSettings }">
       <div class="main-settings" :class="{ 'advSettingsExpanded': expandAdvancedSettings }">
         <button @click="tapTempo" class="solid" id="bpm-control-tap">Tap Tempo</button>
         <div class="main-control-wrapper">
@@ -102,8 +102,8 @@
 <style scoped>
 
 /*
-main color: #630a14;
-accent color: #eb93bd;
+main color: #630a14; // burgandy
+accent color: #EB93BD; // pink
 */ 
   .metronome {
     display: flex;
@@ -120,21 +120,21 @@ accent color: #eb93bd;
   }
 
   .solid{
-    background-color: #eb93bd;
+    background-color: #EB93BD;
     color: #630a14;
     border:none;
   }
 
   .outline{
     background-color: #630a14;
-    color: #eb93bd;
-    border-color: #eb93bd;
-    border: 1.5px solid #eb93bd;
+    color: #EB93BD;
+    border-color: #EB93BD;
+    border: 1.5px solid #EB93BD;
   }
 
   .outline-without-border{
     background-color: #630a14;
-    color: #eb93bd;
+    color: #EB93BD;
     border:none;
   }
   .main-settings{

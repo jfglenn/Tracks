@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <h1>Spotify Login Example</h1>
-    <button @click="login">Login with Spotify</button>
+  <div id="login">
+    <h1>TRACKS: MUSIC TO MOVE YOU</h1>
+    <button class="btn" @click="login">Login with Spotify</button>
   </div>
 </template>
 
@@ -37,13 +37,27 @@ export default {
 }
 </script>
 
-<style>
-#app {
+<style scoped>
+#login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #AED0CF;
+  background-color: #016d69;
+  height: 100%;
+  width:100%;
+}
+
+.btn{
+  width: 250px;
+  height: 60px;
+  border-radius: 30px;
+  border: 1px solid #AED0CF;
+  background-color: #016d69;
 }
 </style>

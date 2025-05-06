@@ -11,17 +11,14 @@
       </select>
        <input v-model="genre" type="text" placeholder="Genre">
       <input v-model="duration" type="number" placeholder="Playlist duration (minutes)"> -->
-      <button id="generate" type="submit">Generate Playlist</button>
+     
     </form>
-    <Metronome ref="metronome"></Metronome>
+    <button id="generate" type="submit"><b>Generate Playlist</b></button>
     <Timer ref="timer"></Timer>
-    <!-- <Energy ref="energy"></Energy> -->
-    <MultiSelect :originalOptions="genreSeeds"></MultiSelect>
-    <!-- <Danceability></Danceability> -->
-    <GroupedSliders></GroupedSliders>
-     <!-- <Slider  :sliderLabel="energy.name" 
-                    :sliderDescription="energy.description" 
-                   ></Slider> -->
+    <Metronome ref="metronome"></Metronome>
+   
+    <MultiSelect ref="multiSelect" :originalOptions="genreSeeds"></MultiSelect>
+    <GroupedSliders ref="musicMetrics"></GroupedSliders>
   </div>
 </template>
 
@@ -30,7 +27,6 @@ import Metronome from './Metronome.vue';
 import Timer from './Timer.vue';
 import Energy from './Energy.vue';
 import MultiSelect from './MultiSelect.vue';
-import Danceability from './Danceability.vue';
 import Slider from './Slider.vue';
 import GroupedSliders from './GroupedSliders.vue';
 export default {
@@ -39,18 +35,11 @@ export default {
     Timer,
     Energy,
     MultiSelect,
-    Danceability,
     Slider,
     GroupedSliders
   },
   data() {
     return {
-
-      energy: {
-                name: "Energy",
-                description: "measures how 'pumped up' a track is",
-                value: 50
-            },
       genre: '',
       duration: null,
       genreSeeds: [],
@@ -71,10 +60,10 @@ export default {
         min_tempo: debug == true ? 95 : (this.$refs.metronome.minTempo),
         max_tempo: debug == true ? 105 : (this.$refs.metronome.maxTempo),
         target_tempo: debug == true ? 100 : this.$refs.metronome.tempo,
-        target_energy: debug == true ? 1 : this.$refs.energy.energy,
-        target_danceability: debug == true ? 1 : this.danceability,
-        target_valence: debug == true ? 1 : this.valence,
-        seed_genres: debug == true ? "folk" : this.genre,
+        target_energy: debug == true ? 1 : this.$refs.musicMetrics.controls.energy.value,
+        target_danceability: debug == true ? 1 : this.$refs.musicMetrics.controls.danceability.value,
+        target_valence: debug == true ? 1 : this.$refs.musicMetrics.controls.valence.value,
+        seed_genres: debug == true ? "folk" : this.$refs.multiSelect.selectedOptions,
         limit: debug == true ? 30 : this.$refs.timer.calculatePlaylistSongCount()
       });
       const url = `https://api.spotify.com/v1/recommendations?${params.toString()}`; //'https://api.spotify.com/v1/recommendations?limit=5&seed_genres=pop&target_danceability=0.9&target_energy=0.9&target_valence=0'
@@ -151,10 +140,16 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+    initControls(){
+
     }
+  },
+  created(){
   },
   mounted(){
     this.fetchGenreSeeds();
+    //this.initControls();
   }
 }
 </script>
@@ -163,7 +158,11 @@ export default {
 .soundboard{
   display:flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
-
+#generate{
+  border-radius: 15px;
+  background-color: transparent;
+}
 
 </style>
